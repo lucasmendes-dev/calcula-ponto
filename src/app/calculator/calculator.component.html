@@ -5,22 +5,45 @@
         <h3 class="mb-4 text-center">Calculadora de Ponto</h3>
 
         <div class="form-group">
-          <label for="cargaHoraria">Carga Horária:</label>
-          <input type="time" class="form-control" id="cargaHoraria" [(ngModel)]="cargaHoraria">
+          <label for="workload">Carga Horária:</label>
+          <input type="time" class="form-control" id="workload" [(ngModel)]="workload">
         </div>
         
         <div class="form-group">
-          <label for="entrada">Horário entrada:</label>
-          <input type="time" class="form-control" id="entrada" [(ngModel)]="entrada">
+          <label for="entryTime">Horário entrada:</label>
+          <input type="time" class="form-control" id="entryTime" [(ngModel)]="entryTime">
         </div>
 
-        <button type="submit" class="btn btn-primary btn-block" (click)="calculaPonto()">Calcular</button>
+      <!-- pause section -->
+        <div *ngIf="pause">
+          <div class="form-group">
+            <label for="breakTime">Horário Pausa:</label>
+            <input type="time" class="form-control" id="breakTime" [(ngModel)]="breakTime">
+          </div>
+          
+          <div class="form-group">
+            <label for="returnTime">Horário de retorno:</label>
+            <input type="time" class="form-control" id="returnTime" [(ngModel)]="returnTime">
+          </div>
+        </div>
 
-        <h4 *ngIf="resultado" class="mt-5 text-center">Você precisa bater ponto às: <span class="final-result">{{ resultado }} </span></h4>
+        <div class="d-flex justify-content-center" *ngIf="!pause; else elseBlock">
+          <button type="submit" class="btn btn-secondary btn-block mb-3 col-md-6" (click)="addPause()">Adicionar Pausa</button>
+        </div>
+        <ng-template #elseBlock>
+          <div class="d-flex justify-content-center">
+            <button type="submit" class="btn btn-secondary btn-block mb-3 col-md-6" (click)="removePause()">Remover Pausa</button>
+          </div>
+        </ng-template>
+      <!--  -->
+
+        <button type="submit" class="btn btn-primary btn-block" (click)="calculateTime()">Calcular</button>
+
+        <h4 *ngIf="finalResult" class="mt-5 text-center">Você precisa bater ponto às: <span class="final-result">{{ finalResult }} </span></h4>
         <p class="empty">{{ empty }}</p>
         
         <div class="d-flex justify-content-center">
-          <button *ngIf="resultado" class="btn btn-secondary" (click)="reset()">Resetar</button>
+          <button *ngIf="finalResult" class="btn btn-danger reset-button" (click)="reset()">Resetar</button>
         </div>
         
       </div>

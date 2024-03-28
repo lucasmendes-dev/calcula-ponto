@@ -2,9 +2,9 @@
 
 Project designed to calculate the final time of the daily workload, initially built to help my girlfriend in her work!
 
-![calcula ponto](https://github.com/lucasmendes-dev/calcula-ponto/assets/106750716/34d18b7a-5a59-4cdf-bd69-cacc19d42090)
+![image](https://github.com/lucasmendes-dev/calcula-ponto/assets/106750716/7d807bad-42b0-45ac-8f76-b6e53d0a89f7)
 
-# Step by step
+# Step by step to run locally
 
 Clone Repository
 ```sh
