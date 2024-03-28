@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+
 
 @Component({
   selector: 'app-calculator',
@@ -7,33 +8,57 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CalculatorComponent {
 
-  cargaHoraria: string = "";
-  entrada: string = "";
-  resultado: string = "";
+  workload: string = "";
+  entryTime: string = "";
+
+  pause: boolean = false;
+  breakTime: string = "";
+  returnTime: string = "";
+
+  finalResult: string = "";
   empty: string = "";
 
   constructor() {}
 
-  calculaPonto(): void {
-    if (this.cargaHoraria && this.entrada) {
-      const horarioEntrada = new Date("2000-01-01T" + this.entrada);
-      const cargaHoraria = new Date("2000-01-01T" + this.cargaHoraria);
+  calculateTime(): void {
+    if (this.workload && this.entryTime) {
+      const entryTime = new Date("2000-01-01T" + this.entryTime);
+      const workload = new Date("2000-01-01T" + this.workload);
 
-      let horaFinal = new Date((cargaHoraria.getTime() + horarioEntrada.getTime()));
-      horaFinal.setHours(horaFinal.getHours() - 1);  //adjusting
+      let finalTime = new Date((workload.getTime() + entryTime.getTime()));
+      finalTime.setHours(finalTime.getHours() - 1);  //adjusting
 
-      this.resultado = horaFinal.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      if (this.breakTime && this.returnTime) {
+        const breakTime = new Date("2000-01-01T" + this.breakTime);
+        const returnTime = new Date("2000-01-01T" + this.returnTime);
+
+        finalTime = new Date(finalTime.getTime() + (returnTime.getTime() - breakTime.getTime()));
+      }
+      
+      this.finalResult = finalTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
       this.empty = "";
     } else {
       this.empty = "Por favor, preencha a carga horária e o horário de entrada.";
     }
   }
-  
+
   reset(): void {
-    this.cargaHoraria = "";
-    this.entrada = "";
-    this.resultado = "";
+    this.workload = "";
+    this.entryTime = "";
+    this.finalResult = "";
+    this.pause = false;
+    this.breakTime = "";
+    this.returnTime = "";
+  }
+
+  addPause(): void {
+    this.pause = !this.pause;
+  }
+
+  removePause(): void {
+    this.pause = !this.pause;
+    this.breakTime = "";
+    this.returnTime = "";
+    this.finalResult = "";
   }
 }
-
-
